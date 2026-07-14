@@ -1,0 +1,30 @@
+# Vercel will deploy these by default — exclude what's not needed
+.git
+.gitignore
+.next
+.vercel
+node_modules
+coverage
+
+# dev artifacts
+.DS_Store
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+*.tsbuildinfo
+
+# legacy single-file site
+/legacy-site/
+
+# editor / OS
+.vscode
+.idea
+Thumbs.db
+
+# env files (configure in Vercel dashboard instead)
+.env*
+!.env.example
+
+# source maps in dev (Vercel handles prod source maps via NEXT_TELEMETRY_DISABLED)
+*.map
