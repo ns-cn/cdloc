@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { m, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { siteConfig } from "@/lib/site";
 import { ThemeToggle } from "@/components/layout/theme-toggle";
@@ -20,7 +20,7 @@ export function SiteHeader() {
   }, []);
 
   return (
-    <motion.header
+    <m.header
       initial={{ y: -20, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.5, ease: [0.21, 0.47, 0.32, 0.98] }}
@@ -58,7 +58,7 @@ export function SiteHeader() {
                 {item.label}
                 <AnimatePresence>
                   {active && (
-                    <motion.span
+                    <m.span
                       layoutId="nav-active"
                       className="absolute inset-0 -z-10 rounded-md bg-muted"
                       transition={{ type: "spring", stiffness: 380, damping: 30 }}
@@ -73,6 +73,6 @@ export function SiteHeader() {
           </div>
         </nav>
       </div>
-    </motion.header>
+    </m.header>
   );
 }
