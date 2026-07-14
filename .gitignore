@@ -49,4 +49,4 @@ next-env.d.ts
 
 
 # legacy static site (pre-Next.js)
-/legacy-site/
+/legacy-site/legacy-site/
