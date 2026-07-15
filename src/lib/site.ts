@@ -9,6 +9,8 @@ const siteUrl =
 export const siteConfig = {
   name: process.env.NEXT_PUBLIC_SITE_NAME ?? "隆诚装修记录",
   shortName: "LongCheng",
+  location: "成都 · 绛溪里",
+  unit: "A1-1-1001",
   description:
     "隆诚房屋装修全过程真实记录 —— 时间线、问题、解决方案。从毛坯到入住的每一个细节。",
   url: siteUrl,

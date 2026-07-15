@@ -1,11 +1,12 @@
 import type { MetadataRoute } from "next";
-import { getPhases } from "@/content/loaders";
+import { getIssues, getPhases } from "@/content/loaders";
 import { siteConfig } from "@/lib/site";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const base = siteConfig.url;
   const now = new Date();
   const phases = await getPhases();
+  const issues = await getIssues();
 
   const staticRoutes: MetadataRoute.Sitemap = [
     { url: `${base}/`, lastModified: now, changeFrequency: "weekly", priority: 1 },
@@ -20,5 +21,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.7,
   }));
 
-  return [...staticRoutes, ...phaseRoutes];
+  const issueRoutes: MetadataRoute.Sitemap = issues.map((i) => ({
+    url: `${base}/issues/${encodeURIComponent(i.slug)}`,
+    lastModified: new Date(i.date),
+    changeFrequency: "monthly",
+    priority: 0.6,
+  }));
+
+  return [...staticRoutes, ...phaseRoutes, ...issueRoutes];
 }
