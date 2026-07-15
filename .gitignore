@@ -50,3 +50,11 @@ next-env.d.ts
 
 # legacy static site (pre-Next.js)
 /legacy-site/
+
+# OpenNext
+.open-next
+
+# wrangler files
+.wrangler
+.dev.vars*
+!.dev.vars.example
