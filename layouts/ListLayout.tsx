@@ -7,6 +7,7 @@ import { CoreContent } from 'pliny/utils/contentlayer'
 import type { Blog } from 'contentlayer/generated'
 import Link from '@/components/Link'
 import Tag from '@/components/Tag'
+import Image from '@/components/Image'
 import siteMetadata from '@/data/siteMetadata'
 
 interface PaginationProps {
@@ -22,44 +23,35 @@ interface ListLayoutProps {
 
 function Pagination({ totalPages, currentPage }: PaginationProps) {
   const pathname = usePathname()
-  const segments = pathname.split('/')
-  const lastSegment = segments[segments.length - 1]
   const basePath = pathname
-    .replace(/^\//, '') // Remove leading slash
-    .replace(/\/page\/\d+\/?$/, '') // Remove any trailing /page
-    .replace(/\/$/, '') // Remove trailing slash
+    .replace(/^\//, '')
+    .replace(/\/page\/\d+\/?$/, '')
+    .replace(/\/$/, '')
   const prevPage = currentPage - 1 > 0
   const nextPage = currentPage + 1 <= totalPages
 
   return (
     <div className="space-y-2 pt-6 pb-8 md:space-y-5">
       <nav className="flex justify-between">
-        {!prevPage && (
-          <button className="cursor-auto disabled:opacity-50" disabled={!prevPage}>
-            上一页
-          </button>
-        )}
-        {prevPage && (
-          <Link
-            href={currentPage - 1 === 1 ? `/${basePath}/` : `/${basePath}/page/${currentPage - 1}`}
-            rel="prev"
+        <button disabled={!prevPage}>
+          <a
+            href={prevPage ? `${basePath}/page/${currentPage - 1}` : '#'}
+            className={prevPage ? 'text-primary-500 hover:text-primary-600' : 'text-gray-400 cursor-not-allowed'}
           >
-            上一页
-          </Link>
-        )}
-        <span>
+            <span>上一页</span>
+          </a>
+        </button>
+        <span className="text-gray-400">
           第 {currentPage} 页，共 {totalPages} 页
         </span>
-        {!nextPage && (
-          <button className="cursor-auto disabled:opacity-50" disabled={!nextPage}>
-            下一页
-          </button>
-        )}
-        {nextPage && (
-          <Link href={`/${basePath}/page/${currentPage + 1}`} rel="next">
-            下一页
-          </Link>
-        )}
+        <button disabled={!nextPage}>
+          <a
+            href={nextPage ? `${basePath}/page/${currentPage + 1}` : '#'}
+            className={nextPage ? 'text-primary-500 hover:text-primary-600' : 'text-gray-400 cursor-not-allowed'}
+          >
+            <span>下一页</span>
+          </a>
+        </button>
       </nav>
     </div>
   )
@@ -77,7 +69,6 @@ export default function ListLayout({
     return searchContent.toLowerCase().includes(searchValue.toLowerCase())
   })
 
-  // If initialDisplayPosts exist, display it if no searchValue is specified
   const displayPosts =
     initialDisplayPosts.length > 0 && !searchValue ? initialDisplayPosts : filteredBlogPosts
 
@@ -90,12 +81,12 @@ export default function ListLayout({
           </h1>
           <div className="relative max-w-lg">
             <label>
-              <span className="sr-only">Search articles</span>
+              <span className="sr-only">搜索文章</span>
               <input
-                aria-label="Search articles"
+                aria-label="搜索文章"
                 type="text"
                 onChange={(e) => setSearchValue(e.target.value)}
-                placeholder="Search articles"
+                placeholder="搜索文章"
                 className="focus:border-primary-500 focus:ring-primary-500 block w-full rounded-md border border-gray-300 bg-white px-4 py-2 text-gray-900 dark:border-gray-900 dark:bg-gray-800 dark:text-gray-100"
               />
             </label>
@@ -115,35 +106,49 @@ export default function ListLayout({
             </svg>
           </div>
         </div>
-        <ul>
+        <ul className="divide-y divide-gray-200 dark:divide-gray-700">
           {!filteredBlogPosts.length && '暂无文章。'}
           {displayPosts.map((post) => {
-            const { path, date, title, summary, tags } = post
+            const { path, date, title, summary, tags, images } = post
+            const coverImage = images && images.length > 0
+              ? images[0]
+              : 'https://picsum.photos/seed/picsum/400/300'
             return (
-              <li key={path} className="py-4">
-                <article className="space-y-2 xl:grid xl:grid-cols-4 xl:items-baseline xl:space-y-0">
-                  <dl>
-                    <dt className="sr-only">发布时间</dt>
-                    <dd className="text-base leading-6 font-medium text-gray-500 dark:text-gray-400">
-                      <time dateTime={date}>{formatDate(date, siteMetadata.locale)}</time>
-                    </dd>
-                  </dl>
-                  <div className="space-y-3 xl:col-span-3">
-                    <div>
-                      <h3 className="text-2xl leading-8 font-bold tracking-tight">
-                        <Link href={`/${path}`} className="text-gray-900 dark:text-gray-100">
-                          {title}
-                        </Link>
-                      </h3>
-                      <div className="flex flex-wrap">
-                        {tags?.map((tag) => (
-                          <Tag key={tag} text={tag} />
-                        ))}
-                      </div>
+              <li key={path} className="py-6">
+                <article className="grid grid-cols-1 gap-4 sm:grid-cols-[200px_1fr] sm:items-start">
+                  <div className="relative aspect-[4/3] overflow-hidden rounded-lg">
+                    <Link href={`/${path}`}>
+                      <Image
+                        src={coverImage}
+                        alt={title}
+                        fill
+                        className="object-cover"
+                        sizes="200px"
+                      />
+                    </Link>
+                  </div>
+                  <div className="space-y-2">
+                    <time
+                      dateTime={date}
+                      className="text-sm text-gray-500 dark:text-gray-400"
+                    >
+                      {formatDate(date, siteMetadata.locale)}
+                    </time>
+                    <h3 className="text-xl font-bold leading-tight">
+                      <Link href={`/${path}`} className="text-gray-900 dark:text-gray-100">
+                        {title}
+                      </Link>
+                    </h3>
+                    <div className="flex flex-wrap gap-1">
+                      {tags?.map((tag) => (
+                        <Tag key={tag} text={tag} />
+                      ))}
                     </div>
-                    <div className="prose max-w-none text-gray-500 dark:text-gray-400">
-                      {summary}
-                    </div>
+                    {summary && (
+                      <p className="text-sm text-gray-500 dark:text-gray-400 line-clamp-2">
+                        {summary}
+                      </p>
+                    )}
                   </div>
                 </article>
               </li>
@@ -151,8 +156,11 @@ export default function ListLayout({
           })}
         </ul>
       </div>
-      {pagination && pagination.totalPages > 1 && !searchValue && (
-        <Pagination currentPage={pagination.currentPage} totalPages={pagination.totalPages} />
+      {pagination && pagination.totalPages > 1 && (
+        <Pagination
+          totalPages={pagination.totalPages}
+          currentPage={pagination.currentPage}
+        />
       )}
     </>
   )

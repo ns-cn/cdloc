@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 }
 
 export default async function PendingPage() {
-  const post = allBlogs.find((p) => p.slug === 'pending-issues')
+  const post = allBlogs.find((p) => p.slug === '20260716-pending-issues')
   if (!post) {
     return <div>内容不存在</div>
   }
