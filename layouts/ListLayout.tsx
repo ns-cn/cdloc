@@ -116,14 +116,14 @@ export default function ListLayout({
           </div>
         </div>
         <ul>
-          {!filteredBlogPosts.length && 'No posts found.'}
+          {!filteredBlogPosts.length && '暂无文章。'}
           {displayPosts.map((post) => {
             const { path, date, title, summary, tags } = post
             return (
               <li key={path} className="py-4">
                 <article className="space-y-2 xl:grid xl:grid-cols-4 xl:items-baseline xl:space-y-0">
                   <dl>
-                    <dt className="sr-only">Published on</dt>
+                    <dt className="sr-only">发布时间</dt>
                     <dd className="text-base leading-6 font-medium text-gray-500 dark:text-gray-400">
                       <time dateTime={date}>{formatDate(date, siteMetadata.locale)}</time>
                     </dd>

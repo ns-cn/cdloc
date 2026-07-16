@@ -3,6 +3,7 @@ const headerNavLinks = [
   { href: '/design', title: '设计' },
   { href: '/record', title: '纪实' },
   { href: '/pitfalls', title: '踩坑' },
+  { href: '/pending', title: '待整改' },
   { href: '/about', title: '关于' },
 ]
 
