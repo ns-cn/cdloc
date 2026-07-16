@@ -1,7 +1,6 @@
 import 'css/prism.css'
 import 'katex/dist/katex.css'
 
-import PageTitle from '@/components/PageTitle'
 import { components } from '@/components/MDXComponents'
 import { MDXLayoutRenderer } from 'pliny/mdx-components'
 import { sortPosts, coreContent, allCoreContent } from 'pliny/utils/contentlayer'
@@ -10,6 +9,7 @@ import type { Authors, Blog } from 'contentlayer/generated'
 import PostSimple from '@/layouts/PostSimple'
 import PostLayout from '@/layouts/PostLayout'
 import PostBanner from '@/layouts/PostBanner'
+import PasswordGate from '@/components/PasswordGate'
 import { Metadata } from 'next'
 import siteMetadata from '@/data/siteMetadata'
 import { notFound } from 'next/navigation'
@@ -45,7 +45,7 @@ export async function generateMetadata(props: {
   }
   const ogImages = imageList.map((img) => {
     return {
-      url: img && img.includes('http') ? img : siteMetadata.siteUrl + img,
+      url: img,
     }
   })
 
@@ -55,20 +55,13 @@ export async function generateMetadata(props: {
     openGraph: {
       title: post.title,
       description: post.summary,
-      siteName: siteMetadata.title,
-      locale: 'en_US',
-      type: 'article',
       publishedTime: publishedAt,
       modifiedTime: modifiedAt,
-      url: './',
+      authors: authors.length > 0 ? authors : undefined,
       images: ogImages,
-      authors: authors.length > 0 ? authors : [siteMetadata.author],
     },
-    twitter: {
-      card: 'summary_large_image',
-      title: post.title,
-      description: post.summary,
-      images: imageList,
+    alternates: {
+      canonical: post.canonicalUrl,
     },
   }
 }
@@ -80,7 +73,6 @@ export const generateStaticParams = async () => {
 export default async function Page(props: { params: Promise<{ slug: string[] }> }) {
   const params = await props.params
   const slug = decodeURI(params.slug.join('/'))
-  // Filter out drafts in production
   const sortedCoreContents = allCoreContent(sortPosts(allBlogs))
   const postIndex = sortedCoreContents.findIndex((p) => p.slug === slug)
   if (postIndex === -1) {
@@ -105,6 +97,11 @@ export default async function Page(props: { params: Promise<{ slug: string[] }> 
   })
 
   const Layout = layouts[post.layout || defaultLayout]
+  const postContent = (
+    <Layout content={mainContent} authorDetails={authorDetails} next={next} prev={prev}>
+      <MDXLayoutRenderer code={post.body.code} components={components} toc={post.toc} />
+    </Layout>
+  )
 
   return (
     <>
@@ -112,9 +109,13 @@ export default async function Page(props: { params: Promise<{ slug: string[] }> 
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <Layout content={mainContent} authorDetails={authorDetails} next={next} prev={prev}>
-        <MDXLayoutRenderer code={post.body.code} components={components} toc={post.toc} />
-      </Layout>
+      {post.password ? (
+        <PasswordGate password={post.password} hint={post.passwordHint}>
+          {postContent}
+        </PasswordGate>
+      ) : (
+        postContent
+      )}
     </>
   )
 }

@@ -109,7 +109,7 @@ export default function ListLayout({
         <ul className="divide-y divide-gray-200 dark:divide-gray-700">
           {!filteredBlogPosts.length && '暂无文章。'}
           {displayPosts.map((post) => {
-            const { path, date, title, summary, tags, images } = post
+            const { path, date, title, summary, tags, images, password } = post
             const coverImage = images && images.length > 0
               ? images[0]
               : 'https://picsum.photos/seed/picsum/400/300'
@@ -128,18 +128,19 @@ export default function ListLayout({
                     </Link>
                   </div>
                   <div className="space-y-2">
-                    <time
-                      dateTime={date}
-                      className="text-sm text-gray-500 dark:text-gray-400"
-                    >
-                      {formatDate(date, siteMetadata.locale)}
-                    </time>
                     <h3 className="text-xl font-bold leading-tight">
                       <Link href={`/${path}`} className="text-gray-900 dark:text-gray-100">
                         {title}
                       </Link>
+                      {password && (
+                        <svg className="inline h-4 w-4 ml-1 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                        </svg>
+                      )}
                     </h3>
-                    <div className="flex flex-wrap gap-1">
+                    <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-gray-500 dark:text-gray-400">
+                      <time dateTime={date}>{formatDate(date, siteMetadata.locale)}</time>
+                      <span>·</span>
                       {tags?.map((tag) => (
                         <Tag key={tag} text={tag} />
                       ))}

@@ -1,5 +1,6 @@
 import Link from '@/components/Link'
 import Tag from '@/components/Tag'
+import Image from '@/components/Image'
 import siteMetadata from '@/data/siteMetadata'
 import { formatDate } from 'pliny/utils/formatDate'
 import NewsletterForm from 'pliny/ui/NewsletterForm'
@@ -21,47 +22,58 @@ export default function Home({ posts }) {
         <ul className="divide-y divide-gray-200 dark:divide-gray-700">
           {!posts.length && '暂无文章。'}
           {posts.slice(0, MAX_DISPLAY).map((post) => {
-            const { slug, date, title, summary, tags } = post
+            const { slug, date, title, summary, tags, images, password } = post
+            const coverImage = images && images.length > 0
+              ? images[0]
+              : 'https://picsum.photos/seed/picsum/400/300'
             return (
-              <li key={slug} className="py-12">
-                <article>
-                  <div className="space-y-2 xl:grid xl:grid-cols-4 xl:items-baseline xl:space-y-0">
-                    <dl>
-                      <dt className="sr-only">发布时间</dt>
-                      <dd className="text-base leading-6 font-medium text-gray-500 dark:text-gray-400">
-                        <time dateTime={date}>{formatDate(date, siteMetadata.locale)}</time>
-                      </dd>
-                    </dl>
-                    <div className="space-y-5 xl:col-span-3">
-                      <div className="space-y-6">
-                        <div>
-                          <h2 className="text-2xl leading-8 font-bold tracking-tight">
-                            <Link
-                              href={`/blog/${slug}`}
-                              className="text-gray-900 dark:text-gray-100"
-                            >
-                              {title}
-                            </Link>
-                          </h2>
-                          <div className="flex flex-wrap">
-                            {tags.map((tag) => (
-                              <Tag key={tag} text={tag} />
-                            ))}
-                          </div>
-                        </div>
-                        <div className="prose max-w-none text-gray-500 dark:text-gray-400">
-                          {summary}
-                        </div>
-                      </div>
-                      <div className="text-base leading-6 font-medium">
-                        <Link
-                          href={`/blog/${slug}`}
-                          className="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400"
-                          aria-label={`阅读更多: "${title}"`}
-                        >
-                          阅读更多 &rarr;
-                        </Link>
-                      </div>
+              <li key={slug} className="py-8">
+                <article className="grid grid-cols-1 gap-4 sm:grid-cols-[200px_1fr] sm:items-start">
+                  <div className="relative aspect-[4/3] overflow-hidden rounded-lg">
+                    <Link href={`/blog/${slug}`}>
+                      <Image
+                        src={coverImage}
+                        alt={title}
+                        fill
+                        className="object-cover"
+                        sizes="200px"
+                      />
+                    </Link>
+                  </div>
+                  <div className="space-y-2">
+                    <h2 className="text-xl font-bold leading-tight">
+                      <Link
+                        href={`/blog/${slug}`}
+                        className="text-gray-900 dark:text-gray-100"
+                      >
+                        {title}
+                      </Link>
+                      {password && (
+                        <svg className="inline h-4 w-4 ml-1 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                        </svg>
+                      )}
+                    </h2>
+                    <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-gray-500 dark:text-gray-400">
+                      <time dateTime={date}>{formatDate(date, siteMetadata.locale)}</time>
+                      <span>·</span>
+                      {tags.map((tag) => (
+                        <Tag key={tag} text={tag} />
+                      ))}
+                    </div>
+                    {summary && (
+                      <p className="text-sm text-gray-500 dark:text-gray-400 line-clamp-2">
+                        {summary}
+                      </p>
+                    )}
+                    <div className="text-base leading-6 font-medium">
+                      <Link
+                        href={`/blog/${slug}`}
+                        className="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400"
+                        aria-label={`阅读更多: "${title}"`}
+                      >
+                        阅读更多 &rarr;
+                      </Link>
                     </div>
                   </div>
                 </article>
