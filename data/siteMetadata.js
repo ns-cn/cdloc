@@ -1,9 +1,9 @@
 /** @type {import("pliny/config").PlinyConfig } */
 const siteMetadata = {
-  title: '隆诚装修纪实',
+  title: '隆诚.work',
   author: '隆诚',
-  headerTitle: '隆诚装修',
-  description: '记录隆诚房屋装修全过程，从毛坯到入住，每一步都认真对待',
+  headerTitle: '隆诚.work',
+  description: '以客户视角真实记录房屋从考察、签约、施工到交付全过程的真实情况',
   language: 'zh-cn',
   theme: 'system', // system, dark or light
   siteUrl: 'https://cdloc.vercel.app',
