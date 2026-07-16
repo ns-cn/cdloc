@@ -36,7 +36,11 @@ function Pagination({ totalPages, currentPage }: PaginationProps) {
         <button disabled={!prevPage}>
           <a
             href={prevPage ? `${basePath}/page/${currentPage - 1}` : '#'}
-            className={prevPage ? 'text-primary-500 hover:text-primary-600' : 'text-gray-400 cursor-not-allowed'}
+            className={
+              prevPage
+                ? 'text-primary-500 hover:text-primary-600'
+                : 'cursor-not-allowed text-gray-400'
+            }
           >
             <span>上一页</span>
           </a>
@@ -47,7 +51,11 @@ function Pagination({ totalPages, currentPage }: PaginationProps) {
         <button disabled={!nextPage}>
           <a
             href={nextPage ? `${basePath}/page/${currentPage + 1}` : '#'}
-            className={nextPage ? 'text-primary-500 hover:text-primary-600' : 'text-gray-400 cursor-not-allowed'}
+            className={
+              nextPage
+                ? 'text-primary-500 hover:text-primary-600'
+                : 'cursor-not-allowed text-gray-400'
+            }
           >
             <span>下一页</span>
           </a>
@@ -110,9 +118,8 @@ export default function ListLayout({
           {!filteredBlogPosts.length && '暂无文章。'}
           {displayPosts.map((post) => {
             const { path, date, title, summary, tags, images, password } = post
-            const coverImage = images && images.length > 0
-              ? images[0]
-              : 'https://picsum.photos/seed/picsum/400/300'
+            const coverImage =
+              images && images.length > 0 ? images[0] : 'https://picsum.photos/seed/picsum/400/300'
             return (
               <li key={path} className="py-6">
                 <article className="grid grid-cols-1 gap-4 sm:grid-cols-[200px_1fr] sm:items-start">
@@ -128,13 +135,23 @@ export default function ListLayout({
                     </Link>
                   </div>
                   <div className="space-y-2">
-                    <h3 className="text-xl font-bold leading-tight">
+                    <h3 className="text-xl leading-tight font-bold">
                       <Link href={`/${path}`} className="text-gray-900 dark:text-gray-100">
                         {title}
                       </Link>
                       {password && (
-                        <svg className="inline h-4 w-4 ml-1 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                        <svg
+                          className="ml-1 inline h-4 w-4 text-gray-400"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
+                          />
                         </svg>
                       )}
                     </h3>
@@ -146,7 +163,7 @@ export default function ListLayout({
                       ))}
                     </div>
                     {summary && (
-                      <p className="text-sm text-gray-500 dark:text-gray-400 line-clamp-2">
+                      <p className="line-clamp-2 text-sm text-gray-500 dark:text-gray-400">
                         {summary}
                       </p>
                     )}
@@ -158,10 +175,7 @@ export default function ListLayout({
         </ul>
       </div>
       {pagination && pagination.totalPages > 1 && (
-        <Pagination
-          totalPages={pagination.totalPages}
-          currentPage={pagination.currentPage}
-        />
+        <Pagination totalPages={pagination.totalPages} currentPage={pagination.currentPage} />
       )}
     </>
   )

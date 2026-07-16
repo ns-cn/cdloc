@@ -99,7 +99,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
         precedence="default"
       />
-      <body className="flex flex-col min-h-screen bg-white pl-[calc(100vw-100%)] text-black antialiased dark:bg-gray-950 dark:text-white">
+      <body className="flex min-h-screen flex-col bg-white pl-[calc(100vw-100%)] text-black antialiased dark:bg-gray-950 dark:text-white">
         <ThemeProviders>
           <Analytics analyticsConfig={siteMetadata.analytics as AnalyticsConfig} />
           <div className="mx-auto flex w-full max-w-3xl flex-1 flex-col px-4 sm:px-6 xl:max-w-5xl xl:px-0">
@@ -110,10 +110,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <Footer />
           </div>
         </ThemeProviders>
-        <Script
-          src="//cdn.busuanzi.cc/busuanzi/3.6.9/busuanzi.min.js"
-          defer
-        />
+        <Script src="//cdn.busuanzi.cc/busuanzi/3.6.9/busuanzi.min.js" defer />
       </body>
     </html>
   )

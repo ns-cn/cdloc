@@ -6,7 +6,5 @@ export default function Comments({ slug }: { slug: string }) {
     return null
   }
 
-  return (
-    <CommentsComponent commentsConfig={siteMetadata.comments} slug={slug} />
-  )
+  return <CommentsComponent commentsConfig={siteMetadata.comments} slug={slug} />
 }

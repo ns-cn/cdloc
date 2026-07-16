@@ -70,7 +70,7 @@ const MobileNav = () => {
             leaveFrom="opacity-100 translate-x-0"
             leaveTo="opacity-0 translate-x-full"
           >
-            <DialogPanel className="fixed top-0 right-0 z-50 h-full w-full max-w-xs bg-white dark:bg-gray-950 p-6 shadow-xl">
+            <DialogPanel className="fixed top-0 right-0 z-50 h-full w-full max-w-xs bg-white p-6 shadow-xl dark:bg-gray-950">
               <button
                 aria-label="Close Menu"
                 className="absolute top-4 right-4 p-2"
@@ -89,12 +89,12 @@ const MobileNav = () => {
                   />
                 </svg>
               </button>
-              <div className="flex flex-col gap-4 mt-8">
+              <div className="mt-8 flex flex-col gap-4">
                 {headerNavLinks.map((link) => (
                   <Link
                     key={link.title}
                     href={link.href}
-                    className="text-lg font-medium text-gray-900 dark:text-gray-100 hover:text-primary-500"
+                    className="hover:text-primary-500 text-lg font-medium text-gray-900 dark:text-gray-100"
                     onClick={onToggleNav}
                   >
                     {link.title}

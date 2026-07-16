@@ -23,9 +23,8 @@ export default function Home({ posts }) {
           {!posts.length && '暂无文章。'}
           {posts.slice(0, MAX_DISPLAY).map((post) => {
             const { slug, date, title, summary, tags, images, password } = post
-            const coverImage = images && images.length > 0
-              ? images[0]
-              : 'https://picsum.photos/seed/picsum/400/300'
+            const coverImage =
+              images && images.length > 0 ? images[0] : 'https://picsum.photos/seed/picsum/400/300'
             return (
               <li key={slug} className="py-8">
                 <article className="grid grid-cols-1 gap-4 sm:grid-cols-[200px_1fr] sm:items-start">
@@ -41,16 +40,23 @@ export default function Home({ posts }) {
                     </Link>
                   </div>
                   <div className="space-y-2">
-                    <h2 className="text-xl font-bold leading-tight">
-                      <Link
-                        href={`/blog/${slug}`}
-                        className="text-gray-900 dark:text-gray-100"
-                      >
+                    <h2 className="text-xl leading-tight font-bold">
+                      <Link href={`/blog/${slug}`} className="text-gray-900 dark:text-gray-100">
                         {title}
                       </Link>
                       {password && (
-                        <svg className="inline h-4 w-4 ml-1 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                        <svg
+                          className="ml-1 inline h-4 w-4 text-gray-400"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
+                          />
                         </svg>
                       )}
                     </h2>
@@ -62,7 +68,7 @@ export default function Home({ posts }) {
                       ))}
                     </div>
                     {summary && (
-                      <p className="text-sm text-gray-500 dark:text-gray-400 line-clamp-2">
+                      <p className="line-clamp-2 text-sm text-gray-500 dark:text-gray-400">
                         {summary}
                       </p>
                     )}
