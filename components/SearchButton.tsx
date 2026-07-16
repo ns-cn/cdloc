@@ -10,8 +10,7 @@ const SearchButton = () => {
     const SearchButtonWrapper =
       siteMetadata.search.provider === 'algolia' ? AlgoliaButton : KBarButton
 
-    return (
-        <SearchButtonWrapper aria-label="搜索">
+      <SearchButtonWrapper aria-label="搜索">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
