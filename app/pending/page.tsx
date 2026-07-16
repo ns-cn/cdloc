@@ -1,7 +1,6 @@
 import { allBlogs } from 'contentlayer/generated'
 import { MDXLayoutRenderer } from 'pliny/mdx-components'
 import { coreContent } from 'pliny/utils/contentlayer'
-import PostLayout from '@/layouts/PostLayout'
 import PostSimple from '@/layouts/PostSimple'
 import { Metadata } from 'next'
 
@@ -16,11 +15,10 @@ export default async function PendingPage() {
     return <div>内容不存在</div>
   }
   const mainContent = coreContent(post)
-  const Layout = post.layout === 'PostSimple' ? PostSimple : PostLayout
 
   return (
-    <Layout content={mainContent} authorDetails={[]}>
+    <PostSimple content={mainContent}>
       <MDXLayoutRenderer code={post.body.code} />
-    </Layout>
+    </PostSimple>
   )
 }
