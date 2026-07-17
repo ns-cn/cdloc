@@ -1,6 +1,7 @@
 import Link from './Link'
 import siteMetadata from '@/data/siteMetadata'
 import SocialIcon from '@/components/social-icons'
+import versionData from '@/data/version.json'
 
 export default function Footer() {
   return (
@@ -84,6 +85,14 @@ export default function Footer() {
               />
             </svg>
             <span id="busuanzi_site_pv">-</span>
+          </span>
+        </div>
+        <div className="mb-2 text-sm text-gray-500 dark:text-gray-400">
+          <span>
+            最后更新:{' '}
+            {new Date(versionData.lastCommit).toLocaleString('zh-CN', {
+              timeZone: 'Asia/Shanghai',
+            })}
           </span>
         </div>
         <div className="mb-3 text-sm text-gray-500 dark:text-gray-400">
