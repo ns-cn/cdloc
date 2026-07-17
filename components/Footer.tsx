@@ -87,7 +87,11 @@ export default function Footer() {
             <span id="busuanzi_site_pv">-</span>
           </span>
         </div>
-        <div className="mb-2 text-sm text-gray-500 dark:text-gray-400">
+        <div className="mb-3 text-sm text-gray-500 dark:text-gray-400">
+          <Link href="https://github.com/timlrx/tailwind-nextjs-starter-blog">
+            基于 Tailwind Nextjs Theme
+          </Link>
+          <span>{` • `}</span>
           <span>
             最后更新:{' '}
             {new Date(versionData.lastCommit).toLocaleString('zh-CN', {
