@@ -4,8 +4,8 @@
 
 COMMIT_MSG_FILE="$1"
 
-# 获取当前时间（ISO 8601 格式，带时区）
-COMMIT_TIME=$(date -u "+%Y-%m-%dT%H:%M:%S+08:00")
+# 获取当前北京时间（ISO 8601 格式，带时区）
+COMMIT_TIME=$(TZ=Asia/Shanghai date "+%Y-%m-%dT%H:%M:%S+08:00")
 
 # 更新版本文件
 node -e "
