@@ -1,0 +1,19 @@
+// CF Pages + OpenNext 配置
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "cdloc",
+  "main": ".open-next/worker.js",
+  "compatibility_date": "2026-07-22",
+  "compatibility_flags": ["nodejs_compat"],
+  "observability": { "enabled": true },
+  "assets": {
+    "directory": ".open-next/assets",
+    "binding": "ASSETS"
+  },
+  "workers_dev": false,
+  // 真实生产域。本地 dev 用 wrangler dev 或 next dev 都行
+  "routes": [
+    { "pattern": "cdloc.work/*",     "zone_name": "cdloc.work" },
+    { "pattern": "www.cdloc.work/*", "zone_name": "cdloc.work" }
+  ]
+}
