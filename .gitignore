@@ -167,3 +167,14 @@ dist
 .wrangler/
 .open-next/
 _legacy/
+
+# OS / editor cruft
+
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# IDE / tooling local state
+
+.idea/
+.mf/

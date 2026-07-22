@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -11,17 +11,18 @@ export const metadata: Metadata = {
       "真实合同、真实团队、真实过程、真实风波。一个不包装的装修记录站点，业主本人全程记录。",
     type: "website",
   },
-  themeColor: "#f6f7fb",
+
   icons: {
     icon:
       "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='14' fill='%23f6f7fb'/><text x='50%25' y='54%25' text-anchor='middle' font-family='ui-sans-serif,system-ui' font-size='30' font-weight='700' fill='%23111827'>隆</text></svg>",
   },
 };
 
-export const viewport = {
+export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  viewportFit: "cover" as const,
+  viewportFit: "cover",
+  themeColor: "#f6f7fb",
 };
 
 export default function RootLayout({
